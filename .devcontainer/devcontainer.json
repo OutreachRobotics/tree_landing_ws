@@ -1,0 +1,31 @@
+{
+  "name": "humble desktop-full",
+  "build": {
+    "context": "..",
+    "dockerfile": "Dockerfile",
+    "target": "dev"
+  },
+  "runArgs": [
+    "--privileged",
+    "--network=host",
+    "-e", "UDEV=1",
+    "--volume", "/dev:/dev",
+    "--volume", "/run/udev:/run/udev"
+  ],
+  "remoteEnv": {
+    "DISPLAY": ":0"
+  },
+  "postCreateCommand": "sh ./.devcontainer/postCreate.sh",
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "remote.autoForwardPorts": false
+      },
+      "extensions": [
+        "ms-vscode.cpptools",
+        "ms-vscode.cmake-tools",
+        "ms-python.python"
+      ]
+    }
+  }
+}

@@ -1,0 +1,46 @@
+[submodule "src/DeepForest"]
+	path = src/DeepForest
+	url = https://github.com/weecology/DeepForest.git
+[submodule "src/tree_landing"]
+	path = src/tree_landing
+	url = git@github.com:OutreachRobotics/tree_landing.git
+[submodule "src/tree_landing_interfaces"]
+	path = src/tree_landing_interfaces
+	url = https://github.com/chcaya/tree_landing_interfaces.git
+[submodule "src/Micro-XRCE-DDS-Gen"]
+	path = src/Micro-XRCE-DDS-Gen
+	url = https://github.com/ardupilot/Micro-XRCE-DDS-Gen.git
+[submodule "src/micro-ROS-Agent"]
+	path = src/micro-ROS-Agent
+	url = https://github.com/micro-ROS/micro-ROS-Agent.git
+	branch = humble
+[submodule "src/mavros"]
+	path = src/mavros
+	url = https://github.com/mavlink/mavros.git
+	branch = ros2
+[submodule "src/ardupilot"]
+	path = src/ardupilot
+	url = https://github.com/chcaya/ardupilot.git
+	branch = Copter-4.5
+[submodule "src/ardupilot_gazebo"]
+	path = src/ardupilot_gazebo
+	url = https://github.com/ArduPilot/ardupilot_gazebo
+	branch = ros2
+[submodule "src/ardupilot_gz"]
+	path = src/ardupilot_gz
+	url = https://github.com/ArduPilot/ardupilot_gz.git
+[submodule "src/SITL_Models"]
+	path = src/SITL_Models
+	url = https://github.com/ArduPilot/SITL_Models.git
+[submodule "src/sdformat_urdf"]
+	path = src/sdformat_urdf
+	url = https://github.com/ros/sdformat_urdf.git
+	branch = humble
+[submodule "src/ros_gz"]
+	path = src/ros_gz
+	url = https://github.com/chcaya/ros_gz.git
+	branch = range_bridge
+[submodule "src/gazebo-vegetation"]
+	path = src/gazebo-vegetation
+	url = https://github.com/chcaya/gazebo-vegetation.git
+	branch = ros2
