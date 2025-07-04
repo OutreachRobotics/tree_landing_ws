@@ -27,6 +27,7 @@ RUN sudo apt update && sudo apt upgrade -y
 
 # Install pip
 RUN sudo apt install -y\
+    git \
     python3-pip
 
 # Rosdep update
@@ -44,11 +45,20 @@ RUN sudo usermod -a -G dialout $USERNAME
 
 ARG WS=/home/$USERNAME/tree_landing_ws
 ARG SRC=$WS/src
-WORKDIR $SRC
 
-### Repos
-COPY ./ $WS/
+### Base repos
+COPY ./.git/ $WS/.git/
+COPY ./.gitignore $WS/.gitignore
+COPY ./.gitmodules $WS/.gitmodules
+COPY ./src/ardupilot/ $SRC/ardupilot/
+COPY ./src/DeepForest/ $SRC/DeepForest/
+COPY ./src/mavros/ $SRC/mavros/
+COPY ./src/tree_landing/ $SRC/tree_landing/
+COPY ./src/tree_landing_interfaces/ $SRC/tree_landing_interfaces/
+
+WORKDIR $WS
 RUN sudo chown -R $(whoami) .
+RUN git submodule update --init --recursive
 
 ### Custom ros dependencies
 RUN sudo apt-get update && \
@@ -89,12 +99,12 @@ RUN python3 download_deepforest.py $WS/install/DeepForest/deepforest_model.pl
 ### First ROS compile
 WORKDIR $WS
 RUN bash -c "source /opt/ros/humble/setup.bash && sudo apt-get update && rosdep update && rosdep install --from-paths src --ignore-src -r -y"
-RUN bash -c "source /opt/ros/humble/setup.bash && MAKEFLAGS='-j1' colcon build --cmake-args -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_EXPORT_COMPILE_COMMANDS=ON --symlink-install --packages-up-to tree_landing mavros"
+# RUN bash -c "source /opt/ros/humble/setup.bash && MAKEFLAGS='-j1' colcon build --cmake-args -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_EXPORT_COMPILE_COMMANDS=ON --packages-up-to tree_landing mavros"
 RUN echo "source $WS/install/local_setup.bash" >> ~/.bashrc
 
 # Aliases
 WORKDIR $WS
-RUN echo "alias bros='cd $WS && source /opt/ros/humble/setup.bash && MAKEFLAGS='-j1' colcon build --cmake-args -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_EXPORT_COMPILE_COMMANDS=ON --symlink-install && source $WS/install/local_setup.bash'" >> ~/.bashrc && \
+RUN echo "alias bros='cd $WS && source /opt/ros/humble/setup.bash && MAKEFLAGS='-j1' colcon build --cmake-args -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_EXPORT_COMPILE_COMMANDS=ON --packages-skip ardupilot_dds_tests --symlink-install && source $WS/install/local_setup.bash'" >> ~/.bashrc && \
     echo "alias sros='cd $WS && source $WS/install/local_setup.bash'" >> ~/.bashrc && \
     echo "alias spytf='cd $WS/src/tree_landing/ && ros2 run tf2_tools view_frames'" >> ~/.bashrc && \
     echo "alias flat='bash $WS/src/tree_landing/scripts/fetch_latte.bash'" >> ~/.bashrc
@@ -104,6 +114,14 @@ RUN echo "alias bros='cd $WS && source /opt/ros/humble/setup.bash && MAKEFLAGS='
 
 ### DEV BUILD ###
 FROM base AS dev
+
+### Dev repos
+COPY ./ $WS/
+
+WORKDIR $WS
+RUN sudo chown -R $(whoami) .
+RUN git submodule update --init --recursive
+# RUN rm -rf $SRC/ros_gz/ros_ign_*
 
 ### Gazebo Harmonic: https://gazebosim.org/docs/harmonic/install_ubuntu/
 RUN sudo apt-get update && \
@@ -167,23 +185,13 @@ USER $USERNAME
 RUN curl https://d176tv9ibo4jno.cloudfront.net/latest/QGroundControl.AppImage --output $WS/QGroundControl.AppImage
 RUN chmod +x QGroundControl.AppImage
 
-### Data analysis tools
-WORKDIR $WS
-
-# Ardupilot log
-ARG DEBIAN_FRONTEND="noninteractive"
-ENV TZ="America/New_York"
-RUN sudo -E apt-get update -y && sudo -E apt-get install -y python3-tk
-RUN pip install ardupilot_log_reader && \
-    pip install matplotlib
-
 ### Colcon build
 # With gazebo setup: https://github.com/ArduPilot/ardupilot_gazebo
 WORKDIR $WS
 ENV GZ_VERSION=harmonic
 RUN sudo bash -c 'wget https://raw.githubusercontent.com/osrf/osrf-rosdep/master/gz/00-gazebo.list -O /etc/ros/rosdep/sources.list.d/00-gazebo.list'
 RUN bash -c "source /opt/ros/humble/setup.bash && sudo apt update && rosdep update && rosdep resolve gz-harmonic && rosdep install --from-paths src --ignore-src -r -y"
-RUN bash -c "source /opt/ros/humble/setup.bash && MAKEFLAGS='-j1' colcon build --cmake-args -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_EXPORT_COMPILE_COMMANDS=ON --symlink-install"
+# RUN bash -c "source /opt/ros/humble/setup.bash && MAKEFLAGS='-j1' colcon build --cmake-args -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_EXPORT_COMPILE_COMMANDS=ON"
 RUN echo "source $WS/install/local_setup.bash" >> ~/.bashrc
 
 # Setup Gazebo resources

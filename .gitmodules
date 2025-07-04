@@ -36,11 +36,11 @@
 	path = src/sdformat_urdf
 	url = https://github.com/ros/sdformat_urdf.git
 	branch = humble
-[submodule "src/ros_gz"]
-	path = src/ros_gz
-	url = https://github.com/chcaya/ros_gz.git
-	branch = range_bridge
 [submodule "src/gazebo-vegetation"]
 	path = src/gazebo-vegetation
 	url = https://github.com/chcaya/gazebo-vegetation.git
 	branch = ros2
+[submodule "src/ros_gz"]
+	path = src/ros_gz
+	url = https://github.com/chcaya/ros_gz.git
+	branch = humble_gz
