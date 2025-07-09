@@ -1,10 +1,10 @@
 #!/bin/bash
 cd /home/$(whoami)/tree_landing_ws/src/
 rosdep update
-rosdep install --from-paths "/home/$(whoami)/tree_landing_ws/src/ardupilot:/home/$(whoami)/tree_landing_ws/src/mavros:/home/$(whoami)/tree_landing_ws/src/tree_landing" --ignore-src -r -y
+rosdep install --from-paths /home/$(whoami)/tree_landing_ws/src/ardupilot/Tools/ros2/ardupilot_msgs /home/$(whoami)/tree_landing_ws/src/mavros /home/$(whoami)/tree_landing_ws/src/tree_landing /home/$(whoami)/tree_landing_ws/src/tree_landing_interfaces --ignore-src -r -y
 
 cd /home/$(whoami)/tree_landing_ws/
-bash -c "source /opt/ros/humble/setup.bash && MAKEFLAGS='-j1' colcon build --cmake-args -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_EXPORT_COMPILE_COMMANDS=ON --packages-up-to ardupilot mavros tree_landing --symlink-install"
+bash -c "source /opt/ros/humble/setup.bash && MAKEFLAGS='-j1' colcon build --cmake-args -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_EXPORT_COMPILE_COMMANDS=ON --packages-up-to ardupilot_msgs mavros tree_landing --symlink-install"
 bash -c "source /home/$(whoami)/tree_landing_ws/install/local_setup.bash"
 
 cd /home/$(whoami)/tree_landing_ws/src/tree_landing/scripts/
