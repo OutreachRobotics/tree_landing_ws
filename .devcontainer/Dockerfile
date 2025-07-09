@@ -29,6 +29,8 @@ RUN apt-get update && \
     ros-humble-tf-transformations \
     ros-humble-mavros \
     ros-humble-mavros-extras \
+    ros-humble-mavros-msgs \
+    ros-humble-libmavconn \
     ros-humble-realsense2-* \
     ros-humble-pcl-ros \
     ros-humble-rtabmap-ros \
@@ -54,9 +56,7 @@ ARG SRC=$WS/src
 COPY ./.git/ $WS/.git/
 COPY ./.gitignore $WS/.gitignore
 COPY ./.gitmodules $WS/.gitmodules
-COPY ./src/ardupilot/ $SRC/ardupilot/
 COPY ./src/DeepForest/ $SRC/DeepForest/
-COPY ./src/mavros/ $SRC/mavros/
 COPY ./src/tree_landing/ $SRC/tree_landing/
 COPY ./src/tree_landing_interfaces/ $SRC/tree_landing_interfaces/
 
@@ -67,9 +67,7 @@ RUN git submodule update --init --recursive
 RUN pip install python-statemachine
 
 # Add geographic lib for mavros
-WORKDIR $SRC/mavros/mavros/scripts
-RUN chmod +x install_geographiclib_datasets.sh &&\
-    bash -c "./install_geographiclib_datasets.sh"
+RUN bash -c "source /opt/ros/humble/setup.bash && ros2 run mavros install_geographiclib_datasets.sh"
 
 ### DeepForest
 WORKDIR $SRC/DeepForest/
