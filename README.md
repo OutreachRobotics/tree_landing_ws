@@ -59,7 +59,7 @@ The following guide goes through the setup required to deploy the OceanSight Doc
    sudo docker system prune -a
    ```
 
-## Docker build and run
+## Docker build and run on companion computer
 
 1. **Build the base docker image**
    ```
@@ -69,7 +69,7 @@ The following guide goes through the setup required to deploy the OceanSight Doc
 
 2. **Run post build script from inside the container**
    ```
-    docker run --rm -u ubuntu -v ~/tree_landing_ws:/home/ubuntu/tree_landing_ws ros:base bash /home/ubuntu/tree_landing_ws/.devcontainer/postCreate.sh
+    docker run --rm -u ubuntu -v ~/tree_landing_ws:/home/ubuntu/tree_landing_ws ros:base bash /home/ubuntu/tree_landing_ws/.devcontainer/postCreateBase.sh
    ```
 
 3. **Test the new docker image**
