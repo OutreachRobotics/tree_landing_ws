@@ -80,9 +80,6 @@ RUN apt-get update && \
     pip install -e . && \
     pip install numpy==1.26.4
 
-WORKDIR $SRC/tree_landing/scripts/
-RUN python3 download_deepforest.py $WS/install/DeepForest/deepforest_model.pl
-
 ### First ROS compile
 WORKDIR $WS
 RUN bash -c "source /opt/ros/humble/setup.bash && apt-get update && rosdep update && rosdep install --from-paths src --ignore-src -r -y" && \
@@ -149,11 +146,6 @@ ENV PATH="$SRC/Micro-XRCE-DDS-Gen:$SRC/Micro-XRCE-DDS-Gen/scripts:$PATH"
 WORKDIR $WS
 RUN pip install -U packaging
 
-### QGC: https://docs.qgroundcontrol.com/master/en/qgc-user-guide/getting_started/download_and_install.html
-WORKDIR $WS
-RUN curl https://d176tv9ibo4jno.cloudfront.net/latest/QGroundControl.AppImage --output $WS/QGroundControl.AppImage && \
-    chmod +x QGroundControl.AppImage
-
 ### Colcon build
 # With gazebo setup: https://github.com/ArduPilot/ardupilot_gazebo
 WORKDIR $WS
@@ -169,10 +161,3 @@ ENV GZ_SIM_RESOURCE_PATH=$WS/install/tree_landing/share/:/share/tree_landing/gaz
 
 # Switch from root to user
 USER $USERNAME
-
-# USER root
-
-
-# RUN sudo apt-get --purge remove -y gz-tools2
-# RUN sudo apt-get autoremove
-# RUN sudo apt-get install -y ros-humble-gazebo-ros-pkgs
