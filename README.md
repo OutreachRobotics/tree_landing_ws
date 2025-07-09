@@ -74,12 +74,12 @@ The following guide goes through the setup required to deploy the OceanSight Doc
 
 3. **Test the new docker image**
    ```
-   bash ~/tree_landing_ws/src/scripts/drone_launch.sh
+   bash ~/tree_landing_ws/src/tree_landing/scripts/drone_launch.sh
    ```
 
 4. **Run the script to create the start up service**
    ```
-   bash ~/tree_landing_ws/src/scripts/create_startup_script.bash
+   bash ~/tree_landing_ws/src/tree_landing/scripts/drone_launch.sh
    ```
 
 5. **Reboot the computer to test the whole pipeline**

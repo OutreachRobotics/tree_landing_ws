@@ -26,6 +26,7 @@ RUN apt-get update && \
     curl \
     git \
     python3-pip \
+    build-essential \
     ros-humble-tf-transformations \
     ros-humble-mavros \
     ros-humble-mavros-extras \
@@ -87,11 +88,13 @@ RUN bash -c "source /opt/ros/humble/setup.bash && apt-get update && rosdep updat
     echo "alias spytf='cd $WS/src/tree_landing/ && ros2 run tf2_tools view_frames'" >> /home/$USERNAME/.bashrc && \
     echo "alias flat='bash $WS/src/tree_landing/scripts/fetch_latte.bash'" >> /home/$USERNAME/.bashrc
 
+USER $USERNAME
 
 
 
 ### DEV BUILD ###
 FROM base AS dev
+USER root
 
 ### Gazebo Harmonic: https://gazebosim.org/docs/harmonic/install_ubuntu/
 ### Install dev apt packages

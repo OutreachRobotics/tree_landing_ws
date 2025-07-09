@@ -1,5 +1,6 @@
 {
   "name": "humble desktop-full",
+  "remoteUser": "ubuntu",
   "build": {
     "context": "..",
     "dockerfile": "Dockerfile",
