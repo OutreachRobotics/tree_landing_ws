@@ -69,7 +69,7 @@ The following guide goes through the setup required to deploy the OceanSight Doc
 
 2. **Run post build script from inside the container**
    ```
-    docker run --rm -v ~/tree_landing_ws:/home/ubuntu/tree_landing_ws ros:base bash /home/ubuntu/tree_landing_ws/.devcontainer/postCreate.sh
+    docker run --rm -u ubuntu -v ~/tree_landing_ws:/home/ubuntu/tree_landing_ws ros:base bash /home/ubuntu/tree_landing_ws/.devcontainer/postCreate.sh
    ```
 
 3. **Test the new docker image**
