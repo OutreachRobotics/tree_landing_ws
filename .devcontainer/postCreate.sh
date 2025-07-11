@@ -1,4 +1,9 @@
 #!/bin/bash
+set -e # Exit immediately on error
+
+# Take ownership of the mounted workspace
+sudo chown -R $(whoami):$(whoami) /home/$(whoami)/tree_landing_ws
+
 cd /home/$(whoami)/tree_landing_ws/src/
 rosdep update
 rosdep install --from-paths /home/$(whoami)/tree_landing_ws/src --ignore-src -r -y
