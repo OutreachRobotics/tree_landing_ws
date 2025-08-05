@@ -16,5 +16,6 @@ cd /home/$(whoami)/tree_landing_ws/src/tree_landing/scripts/
 bash -c "python3 download_deepforest.py /home/$(whoami)/tree_landing_ws/install/DeepForest/deepforest_model.pl"
 
 cd /home/$(whoami)/tree_landing_ws/
-bash -c "curl -L https://d176tv9ibo4jno.cloudfront.net/latest/QGroundControl.AppImage --output /home/$(whoami)/tree_landing_ws//QGroundControl.AppImage"
+bash -c "sudo apt-get update && sudo apt-get install libfuse2 fuse"
+bash -c "curl -L https://github.com/mavlink/qgroundcontrol/releases/download/v4.4.5/QGroundControl.AppImage --output /home/$(whoami)/tree_landing_ws//QGroundControl.AppImage"
 bash -c "chmod +x QGroundControl.AppImage"
