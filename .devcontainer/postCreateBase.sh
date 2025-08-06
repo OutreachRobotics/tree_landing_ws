@@ -11,6 +11,3 @@ rosdep install --from-paths /home/$(whoami)/tree_landing_ws/src/tree_landing /ho
 cd /home/$(whoami)/tree_landing_ws/
 bash -c "source /opt/ros/humble/setup.bash && MAKEFLAGS='-j1' colcon build --cmake-args -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_EXPORT_COMPILE_COMMANDS=ON --packages-up-to tree_landing --symlink-install"
 bash -c "source /home/$(whoami)/tree_landing_ws/install/local_setup.bash"
-
-cd /home/$(whoami)/tree_landing_ws/src/tree_landing/scripts/
-bash -c "python3 download_deepforest.py /home/$(whoami)/tree_landing_ws/install/DeepForest/deepforest_model.pl"
