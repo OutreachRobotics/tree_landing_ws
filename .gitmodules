@@ -3,7 +3,7 @@
 	url = git@github.com:OutreachRobotics/tree_landing.git
 [submodule "src/tree_landing_interfaces"]
 	path = src/tree_landing_interfaces
-	url = https://github.com/chcaya/tree_landing_interfaces.git
+	url = git@github.com:OutreachRobotics/tree_landing_interfaces.git
 [submodule "src/Micro-XRCE-DDS-Gen"]
 	path = src/Micro-XRCE-DDS-Gen
 	url = https://github.com/ardupilot/Micro-XRCE-DDS-Gen.git
