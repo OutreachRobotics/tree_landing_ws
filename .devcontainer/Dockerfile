@@ -57,7 +57,6 @@ ARG SRC=$WS/src
 COPY ./.git/ $WS/.git/
 COPY ./.gitignore $WS/.gitignore
 COPY ./.gitmodules $WS/.gitmodules
-COPY ./src/DeepForest/ $SRC/DeepForest/
 COPY ./src/tree_landing/ $SRC/tree_landing/
 COPY ./src/tree_landing_interfaces/ $SRC/tree_landing_interfaces/
 
@@ -69,15 +68,6 @@ RUN pip install python-statemachine
 
 # Add geographic lib for mavros
 RUN bash -c "source /opt/ros/humble/setup.bash && ros2 run mavros install_geographiclib_datasets.sh"
-
-### DeepForest
-WORKDIR $SRC/DeepForest/
-RUN apt-get update && \
-    apt-get remove -y python3-sympy && \
-    pip install --upgrade pip && \
-    pip install -r dev_requirements.txt && \
-    pip install -e . && \
-    pip install numpy==1.26.4
 
 ### First ROS compile
 WORKDIR $WS
@@ -141,7 +131,10 @@ RUN pip install future && \
 ### ROS Setup for ardupilot_sitl: https://ardupilot.org/dev/docs/ros2.html
 WORKDIR $SRC/Micro-XRCE-DDS-Gen/
 RUN ./gradlew assemble
-ENV PATH="$SRC/Micro-XRCE-DDS-Gen:$SRC/Micro-XRCE-DDS-Gen/scripts:$PATH"
+RUN mkdir -p $WS/build/Micro-XRCE-DDS-Gen && \
+    cp -r ./share $WS/build/Micro-XRCE-DDS-Gen/ && \
+    cp -r ./scripts $WS/build/Micro-XRCE-DDS-Gen/
+ENV PATH="$WS/build/Micro-XRCE-DDS-Gen:$WS/build/Micro-XRCE-DDS-Gen/scripts:$PATH"
 
 # Fixes bug with ardupilot_sitl: https://github.com/pypa/setuptools/issues/4483
 WORKDIR $WS

@@ -13,7 +13,7 @@
     "--volume", "/dev:/dev",
     "--volume", "/run/udev:/run/udev"
   ],
-  "workspaceMount": "source=${localWorkspaceFolder},target=/home/ubuntu/tree_landing_ws,type=bind",
+  "workspaceMount": "source=${localWorkspaceFolder}/src,target=/home/ubuntu/tree_landing_ws/src,type=bind",
   "workspaceFolder": "/home/ubuntu/tree_landing_ws",
   "remoteEnv": {
     "DISPLAY": ":0"
