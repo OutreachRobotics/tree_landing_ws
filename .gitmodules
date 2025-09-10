@@ -41,3 +41,6 @@
 	path = src/ros_gz
 	url = https://github.com/chcaya/ros_gz.git
 	branch = humble_gz
+[submodule "src/tree_landing_tools"]
+	path = src/tree_landing_tools
+	url = git@github.com:OutreachRobotics/tree_landing_tools.git
