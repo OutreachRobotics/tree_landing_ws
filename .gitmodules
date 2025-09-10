@@ -1,6 +1,3 @@
-[submodule "src/DeepForest"]
-	path = src/DeepForest
-	url = https://github.com/weecology/DeepForest.git
 [submodule "src/tree_landing"]
 	path = src/tree_landing
 	url = git@github.com:OutreachRobotics/tree_landing.git
