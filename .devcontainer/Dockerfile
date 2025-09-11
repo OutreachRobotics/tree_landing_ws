@@ -123,7 +123,7 @@ RUN USER=$USERNAME Tools/environment_install/install-prereqs-ubuntu.sh -y && \
     . /home/$USERNAME/.profile
 USER root
 
-RUN pip install future && \
+RUN pip install future pexpect && \
     ./waf distclean && \
     ./waf configure --board sitl && \
     ./waf copter
