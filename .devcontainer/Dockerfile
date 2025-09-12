@@ -39,6 +39,11 @@ RUN apt-get update && \
     geographiclib-tools \
     libgl1
 
+RUN pip install \
+    pandas \
+    --upgrade scipy \
+    "numpy<2"
+
 # ROS setup
 RUN rosdep update && \
     echo "source /opt/ros/${ROS_DISTRO}/setup.bash" >> /home/$USERNAME/.bashrc
@@ -84,11 +89,6 @@ USER $USERNAME
 
 ### DEV BUILD ###
 FROM base AS dev
-
-RUN pip install \
-    pandas \
-    --upgrade scipy \
-    "numpy<2"
 
 USER root
 
