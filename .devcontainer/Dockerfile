@@ -84,6 +84,12 @@ USER $USERNAME
 
 ### DEV BUILD ###
 FROM base AS dev
+
+RUN pip install \
+    pandas \
+    --upgrade scipy \
+    "numpy<2"
+
 USER root
 
 ### Gazebo Harmonic: https://gazebosim.org/docs/harmonic/install_ubuntu/
@@ -108,11 +114,6 @@ RUN curl https://packages.osrfoundation.org/gazebo.gpg --output /usr/share/keyri
     libxkbcommon-x11-0 \
     libxcb-cursor-dev \
     fuse
-
-RUN pip install \
-    pandas && \
-    --upgrade scipy && \
-    "numpy<2"
 
 ### Dev repos
 COPY ./ $WS/
