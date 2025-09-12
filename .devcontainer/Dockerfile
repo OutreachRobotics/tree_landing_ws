@@ -38,6 +38,11 @@ RUN apt-get update && \
     ros-humble-robot-localization \
     geographiclib-tools \
     libgl1
+    
+RUN pip install \
+    pandas \
+    --upgrade scipy \
+    "numpy<2"
 
 # ROS setup
 RUN rosdep update && \
@@ -84,12 +89,6 @@ USER $USERNAME
 
 ### DEV BUILD ###
 FROM base AS dev
-
-RUN pip install \
-    pandas \
-    --upgrade scipy \
-    "numpy<2"
-
 USER root
 
 ### Gazebo Harmonic: https://gazebosim.org/docs/harmonic/install_ubuntu/
