@@ -109,12 +109,17 @@ RUN curl https://packages.osrfoundation.org/gazebo.gpg --output /usr/share/keyri
     libxcb-cursor-dev \
     fuse
 
+RUN pip install \
+    pandas && \
+    --upgrade scipy && \
+    "numpy<2"
+
 ### Dev repos
 COPY ./ $WS/
 
 WORKDIR $WS
 RUN git submodule update --init --recursive
-
+    
 ### ArdupilotSITL install: https://ardupilot.org/dev/docs/building-setup-linux.html#building-setup-linux
 # Example: https://github.com/radarku/ardupilot-sitl-docker/blob/master/Dockerfile
 USER $USERNAME
@@ -123,7 +128,9 @@ RUN USER=$USERNAME Tools/environment_install/install-prereqs-ubuntu.sh -y && \
     . /home/$USERNAME/.profile
 USER root
 
-RUN pip install future pexpect && \
+RUN pip install \
+    future \
+    pexpect && \
     ./waf distclean && \
     ./waf configure --board sitl && \
     ./waf copter
