@@ -37,7 +37,8 @@ RUN apt-get update && \
     ros-humble-rtabmap-ros \
     ros-humble-robot-localization \
     geographiclib-tools \
-    libgl1
+    libgl1 \
+    libopencv-dev
 
 RUN pip install \
     pandas \
