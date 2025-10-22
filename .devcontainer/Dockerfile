@@ -136,14 +136,6 @@ RUN pip install \
     ./waf configure --board sitl && \
     ./waf copter
 
-### ROS Setup for ardupilot_sitl: https://ardupilot.org/dev/docs/ros2.html
-WORKDIR $SRC/Micro-XRCE-DDS-Gen/
-RUN ./gradlew assemble
-RUN mkdir -p $WS/build/Micro-XRCE-DDS-Gen && \
-    cp -r ./share $WS/build/Micro-XRCE-DDS-Gen/ && \
-    cp -r ./scripts $WS/build/Micro-XRCE-DDS-Gen/
-ENV PATH="$WS/build/Micro-XRCE-DDS-Gen:$WS/build/Micro-XRCE-DDS-Gen/scripts:$PATH"
-
 # Fixes bug with ardupilot_sitl: https://github.com/pypa/setuptools/issues/4483
 WORKDIR $WS
 RUN pip install -U packaging

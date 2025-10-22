@@ -11,10 +11,6 @@
 	path = src/micro-ROS-Agent
 	url = https://github.com/micro-ROS/micro-ROS-Agent.git
 	branch = humble
-[submodule "src/mavros"]
-	path = src/mavros
-	url = https://github.com/mavlink/mavros.git
-	branch = ros2
 [submodule "src/ardupilot"]
 	path = src/ardupilot
 	url = https://github.com/chcaya/ardupilot.git

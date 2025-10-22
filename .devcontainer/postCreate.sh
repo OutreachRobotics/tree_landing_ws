@@ -4,6 +4,20 @@ set -e # Exit immediately on error
 # Take ownership of the mounted workspace
 sudo chown -R $(whoami):$(whoami) /home/$(whoami)/tree_landing_ws
 
+# --- This is the new logic ---
+echo "--- Building Micro-XRCE-DDS-Gen ---"
+cd /home/$(whoami)/tree_landing_ws/src/Micro-XRCE-DDS-Gen
+./gradlew assemble
+
+# Now copy the files to the persistent build directory
+mkdir -p /home/$(whoami)/tree_landing_ws/build/Micro-XRCE-DDS-Gen
+cp -r ./share /home/$(whoami)/tree_landing_ws/build/Micro-XRCE-DDS-Gen/
+cp -r ./scripts /home/$(whoami)/tree_landing_ws/build/Micro-XRCE-DDS-Gen/
+
+# Make the script executable (a common missing step)
+chmod +x /home/$(whoami)/tree_landing_ws/build/Micro-XRCE-DDS-Gen/scripts/microxrceddsgen
+echo "--- Micro-XRCE-DDS-Gen build complete ---"
+
 cd /home/$(whoami)/tree_landing_ws/src/
 rosdep update
 rosdep install --from-paths /home/$(whoami)/tree_landing_ws/src --ignore-src -r -y
